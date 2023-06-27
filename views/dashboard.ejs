@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Belanosima:wght@400;600;700&family=Open+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <link rel="stylesheet" href="/css/dashboard.css">
+    <title>Dashboard</title>
+</head>
+<body>
+
+    <%- include("./partials/navbar.ejs") -%>
+
+    <div class="button">NEW POST</div>
+    
+    <section class="posts-section">
+        <div class="posts-container">
+
+            <h2>Previous Posts</h2>
+
+            <div class="posts-view">
+
+                    <% if (Posts.length === 0) { %>
+                        <h3 class ="error-msg">No posts yet.</h3>
+                    <% } else { %>
+                        <% for( let i = 0; i < Posts.length; i++ ) { %>
+    
+                            <div class="post-card">
+                                <h3><%= Posts[i].title %></h3>
+                                <p><%= Posts[i].description %></p>
+
+                                <div class="delete-btn">
+                                    <i class="fa-solid fa-trash-can"></i>
+                                </div>
+                            </div>
+                                   
+                        <% } %>
+                    <% } %>
+                    
+               
+            </div>
+            
+            
+        </div>
+    </section>
+
+    <%- include("./partials/footer.ejs") -%>
+
+    
+</body>
+</html>
+
+<script>
+    const btn = document.querySelector(".button");
+
+    btn.addEventListener("click" , (e)=>{
+        window.location.replace("post/create/new");
+    });
+
+    const delbtn = document.querySelectorAll(".delete-btn");
+
+    for(let i = 0; i < delbtn.length; i++){
+
+        delbtn[i].addEventListener("click", (e)=>{
+            const desc = e.target.previousElementSibling.innerText;
+            const title = e.target.previousElementSibling.previousElementSibling.innerText;
+
+            deletePost(title , desc);
+            
+        });
+
+    }
+
+    const deletePost = async (title , desc)=>{
+
+        console.log(title , desc);
+
+            try {
+
+                const response = await fetch("./post/delete" , {
+                method: "DELETE",
+                body:JSON.stringify(
+                    {title: title,
+                    desc: desc}
+                ),
+                headers:{"Content-Type": "application/json"}
+                });
+
+                if(response.status === 200){
+                    alert("Post deleted");
+                    window.location.reload(true);
+                }else{
+                    alert("Server error! Please try again later.");
+                    window.location.reload(true);
+                }
+
+            } catch (error) {
+                console.log(error);
+            }
+
+    };
+
+</script>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Belanosima:wght@400;600;700&family=Open+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="/css/newPost.css">
+    <title>New post</title>
+</head>
+<body>
+
+    <%- include("./partials/navbar.ejs") -%>
+
+
+    <section class="new-post-section">
+        <div class="new-post-container">
+            <h2>New Post</h2>
+            <form>
+                <div>
+                    <label for="title">Post Title</label><br>
+                    <input type="text" name="title">
+                </div>
+
+                <div>
+                    <label for="desc">Post description</label><br>
+                    <textarea name="desc" id="desc" cols="30" rows="5"></textarea>
+                </div>
+                
+                <div class="buttons">
+                    <input type="submit" value="Create Post" class="button">
+                    <button type="button" class="button">Cancel</button>
+                </div>
+                
+
+            </form>
+        </div>
+    </section>
+
+    <%- include("./partials/footer.ejs") -%>
+    
+</body>
+</html>
+
+<script>
+    const form = document.querySelector("form");
+
+    //creating the post    
+    form.addEventListener("submit" , async (e)=>{
+        e.preventDefault();
+
+        const title = form.title.value.trim();
+        const desc = form.desc.value.trim();
+
+        
+
+        if(title === "" || desc === ""){
+            alert("Cannot be empty. Please provide some input.");
+        }else{
+            
+            try {
+
+                const response = await fetch("./new" , {
+                method: "POST",
+                body:JSON.stringify(
+                    {title: title,
+                    desc: desc}
+                ),
+                headers:{"Content-Type": "application/json"}
+                });
+
+    
+                if(response.status != 200){
+                    alert("Something went wrong!! Please try again later.");
+                }else{
+                    const data = await response.json();
+                    console.log(data);
+
+                    alert("Sucessfully created");
+
+
+                    window.location.replace("/");
+
+                }
+            
+            } catch (error) {
+                
+            }
+
+        }
+        
+    });
+
+    const cancelBtn = document.querySelector("button");
+
+    cancelBtn.addEventListener("click" , (e)=>{
+        window.location.replace("/");
+    });
+</script>

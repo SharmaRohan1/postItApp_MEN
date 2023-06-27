@@ -1,0 +1,25 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.footer-section{
+    height: 20vh;
+    background: #003566;
+    color: #fff;
+    padding: 1rem 0;
+
+    display: grid;
+    align-items: center;
+}
+
+.footer-container{
+    width: 100%;
+    text-align: center;
+
+    font-size: 1.1rem;
+    font-family: 'Belanosima', sans-serif;
+    font-family: 'Open Sans', sans-serif;
+
+}

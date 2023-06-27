@@ -1,0 +1,31 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.navbar-section{
+    height: 15vh;
+    background: #003566;
+    color: #fff;
+    padding: 1rem 0;
+
+    display: grid;
+    align-items: center;
+    
+}
+
+.navbar-container{
+    width: 80%;
+    margin: auto;
+}
+
+h1{
+    font-size: 2rem;
+    font-family: 'Belanosima', sans-serif;
+    font-family: 'Open Sans', sans-serif;
+}
+
+span{
+    color: #FFC300;
+}
